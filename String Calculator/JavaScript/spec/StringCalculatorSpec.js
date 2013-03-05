@@ -23,4 +23,9 @@ describe('A String Calculator', function(){
     var result = calculator.add("5\n10\n20,30");
     expect(result).toBe(65);
   });
+
+  it("should allow sum the numbers separated by custom separator", function(){
+    var result = calculator.add("//*\n5*10*20*30");
+    expect(result).toBe(65);
+  });
 });
