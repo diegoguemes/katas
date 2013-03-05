@@ -7,17 +7,19 @@ function NumberExtractor(){
   }
 }
 
-function StringCalculator(numbersExtractor){
-  var sum = function(numbers){
+if(!Array.prototype.sum){
+  Array.prototype.sum = function(){
     var sum = 0;
-    numbers.forEach(function(number){
+    this.forEach(function(number){
       sum += number;
     });
     return sum;
   };
+}
 
+function StringCalculator(numbersExtractor){
   this.add = function(numbers){
     var extractedNumbers = numbersExtractor.extract(numbers);
-    return sum(extractedNumbers);
+    return extractedNumbers.sum();
   }
 }
