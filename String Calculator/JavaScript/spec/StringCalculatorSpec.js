@@ -28,4 +28,11 @@ describe('A String Calculator', function(){
     var result = calculator.add("//*\n5*10*20*30");
     expect(result).toBe(65);
   });
+
+  it("should throw error when adding negatives", function(){
+    var addWithNegatives = function(){
+      calculator.add("//5,-10,-20,30");
+    };
+    expect(addWithNegatives).toThrow("Negatives not allowed: -10, -20");
+  });
 });
