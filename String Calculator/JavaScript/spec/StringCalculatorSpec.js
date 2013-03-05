@@ -14,8 +14,13 @@ describe('A String Calculator', function(){
     expect(result).toBe(10);
   });
 
-  it("should return the sum numbers separated by colon", function(){
+  it("should return the sum of numbers separated by colon", function(){
     var result = calculator.add("5,10,20,30");
+    expect(result).toBe(65);
+  });
+
+  it("should allow sum the numbers separated by newline", function(){
+    var result = calculator.add("5\n10\n20,30");
     expect(result).toBe(65);
   });
 });
