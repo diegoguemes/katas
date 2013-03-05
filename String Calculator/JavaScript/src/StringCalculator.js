@@ -24,17 +24,26 @@ if(!Array.prototype.sum){
   };
 }
 
-function StringCalculator(numbersExtractor){
-  var validateNegatives = function(numbers){
+function NumberExtractorWithNegativesValidator(numbersExtractor){
+  
+  var throwIfContainsNegatives = function(numbers){
     var negatives = numbers.negatives();
     if(negatives.length){
       throw "Negatives not allowed: " + negatives.join(", ");
-    };
-  }
+    }
+  };
+
+  this.extract = function(numbers){
+    var extractedNumbers = numbersExtractor.extract(numbers);
+    throwIfContainsNegatives(extractedNumbers);
+    return extractedNumbers;
+  };
+}
+
+function StringCalculator(numbersExtractor){
 
   this.add = function(numbers){
     var extractedNumbers = numbersExtractor.extract(numbers);
-    validateNegatives(extractedNumbers);
     return extractedNumbers.sum();
   }
 }

@@ -1,7 +1,9 @@
 describe('A String Calculator', function(){
   var calculator;
   beforeEach(function(){
-    calculator = new StringCalculator(new NumberExtractor());
+    calculator = new StringCalculator(
+      new NumberExtractorWithNegativesValidator(new NumberExtractor())
+    );
   });
 
   it("should return zero when adding an empty string", function(){
