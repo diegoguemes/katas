@@ -54,4 +54,9 @@ describe('A String Calculator', function(){
     var result = calculator.add("//[*][#]\n5*10#20,30");
     expect(result).toBe(65);
   });
+
+  it("should allow to define multiple delimiters of any length", function(){
+    var result = calculator.add("//[***][###]\n5***10###20,30");
+    expect(result).toBe(65);
+  });
 });
