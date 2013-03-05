@@ -8,6 +8,13 @@ function NumberExtractor(){
 }
 
 if(!Array.prototype.sum){
+  Array.prototype.negatives = function(){
+    var isNegative = function(number){
+      return number < 0;
+    };
+    return this.filter(isNegative);
+  };
+
   Array.prototype.sum = function(){
     var sum = 0;
     this.forEach(function(number){
@@ -20,9 +27,7 @@ if(!Array.prototype.sum){
 function StringCalculator(numbersExtractor){
   this.add = function(numbers){
     var extractedNumbers = numbersExtractor.extract(numbers);
-    var negatives = extractedNumbers.filter(function(number){
-      return number < 0;
-    });
+    var negatives = extractedNumbers.negatives();
     if(negatives.length){
       throw "Negatives not allowed: " + negatives.join(", ");
     }
