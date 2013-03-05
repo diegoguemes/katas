@@ -25,7 +25,7 @@ if(!Array.prototype.sum){
 }
 
 function NumberExtractorWithNegativesValidator(numbersExtractor){
-  
+
   var throwIfContainsNegatives = function(numbers){
     var negatives = numbers.negatives();
     if(negatives.length){
@@ -37,6 +37,20 @@ function NumberExtractorWithNegativesValidator(numbersExtractor){
     var extractedNumbers = numbersExtractor.extract(numbers);
     throwIfContainsNegatives(extractedNumbers);
     return extractedNumbers;
+  };
+}
+
+function NumberExtractorWithBiggerThanFilter(numbersExtractor){
+
+  var biggerThan = function(limit){
+    return function(number){
+      return number <= limit;
+    }
+  };
+
+  this.extract = function(numbers){
+    var extractedNumbers = numbersExtractor.extract(numbers);
+    return extractedNumbers.filter(biggerThan(1000));
   };
 }
 

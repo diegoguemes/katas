@@ -2,7 +2,9 @@ describe('A String Calculator', function(){
   var calculator;
   beforeEach(function(){
     calculator = new StringCalculator(
-      new NumberExtractorWithNegativesValidator(new NumberExtractor())
+      new NumberExtractorWithBiggerThanFilter(
+        new NumberExtractorWithNegativesValidator(
+          new NumberExtractor()))
     );
   });
 
@@ -36,5 +38,10 @@ describe('A String Calculator', function(){
       calculator.add("//5,-10,-20,30");
     };
     expect(addWithNegatives).toThrow("Negatives not allowed: -10, -20");
+  });
+
+  it("should ignore numbers bigger than 1000", function(){
+    var result = calculator.add("//5,10,20,30,1000,1001,1002");
+    expect(result).toBe(1065);
   });
 });
