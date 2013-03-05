@@ -61,3 +61,19 @@ function StringCalculator(numbersExtractor){
     return extractedNumbers.sum();
   }
 }
+
+function StringCalculatorBuilder(numberExtractor){
+  var numberExtractor = numberExtractor || new NumberExtractor();
+
+  this.withBiggerThanFilter = function(){
+    return new StringCalculatorBuilder(new NumberExtractorWithBiggerThanFilter(numberExtractor));
+  };
+
+  this.withNegativesValidator = function(){
+    return new StringCalculatorBuilder(new NumberExtractorWithNegativesValidator(numberExtractor));
+  };
+
+  this.build = function(){
+    return new StringCalculator(numberExtractor);
+  }
+}
