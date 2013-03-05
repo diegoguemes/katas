@@ -8,12 +8,16 @@ function NumberExtractor(){
 }
 
 function StringCalculator(numbersExtractor){
-  this.add = function(numbers){
-    var extractedNumbers = numbersExtractor.extract(numbers);
+  var sum = function(numbers){
     var sum = 0;
-    extractedNumbers.forEach(function(number){
+    numbers.forEach(function(number){
       sum += number;
     });
     return sum;
+  };
+
+  this.add = function(numbers){
+    var extractedNumbers = numbersExtractor.extract(numbers);
+    return sum(extractedNumbers);
   }
 }
