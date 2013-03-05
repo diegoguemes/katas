@@ -5,6 +5,10 @@ function StringCalculator(){
     if(numbers.indexOf(",") == -1)
       return parseInt(numbers);
     var parsedNumbers = numbers.split(",");
-    return parseInt(parsedNumbers[0]) + parseInt(parsedNumbers[1]);
+    var sum = 0;
+    parsedNumbers.forEach(function(number){
+      sum += parseInt(number);
+    });
+    return sum;
   }
 }

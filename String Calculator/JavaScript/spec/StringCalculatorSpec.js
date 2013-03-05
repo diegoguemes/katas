@@ -18,4 +18,9 @@ describe('A String Calculator', function(){
     var result = calculator.add("5,10");
     expect(result).toBe(15);
   });
+
+  it("should return the sum numbers separated by colon", function(){
+    var result = calculator.add("5,10,20,30");
+    expect(result).toBe(65);
+  });
 });
