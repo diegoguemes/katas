@@ -2,6 +2,9 @@ function StringCalculator(){
   this.add = function(numbers){
     if(numbers == "")
       return 0;
-    return parseInt(numbers);
+    if(numbers.indexOf(",") == -1)
+      return parseInt(numbers);
+    var parsedNumbers = numbers.split(",");
+    return parseInt(parsedNumbers[0]) + parseInt(parsedNumbers[1]);
   }
 }
