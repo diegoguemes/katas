@@ -1,10 +1,34 @@
+function StringCalculator(numbersExtractor){
+  this.add = function(numbers){
+    var extractedNumbers = numbersExtractor.extract(numbers);
+    return extractedNumbers.sum();
+  }
+}
+
 function NumberExtractor(){
+  var NUMBER_REGEX = /-?\d+/g;
+
   this.extract = function(numbers){
-    var extractedNumbers = numbers.match(/-?\d+/g) || [];
+    var extractedNumbers = numbers.match(NUMBER_REGEX) || [];
     return extractedNumbers.map(function(number){
       return parseInt(number);
     });
   }
+}
+
+function NumberExtractorWithValidator(numbersExtractor, validator){
+  this.extract = function(input){
+    var numbers = numbersExtractor.extract(input);
+    new validator.validateAndThrow(numbers);
+    return numbers;
+  };
+}
+
+function NumberExtractorWithFilter(numbersExtractor, filter){
+  this.extract = function(numbers){
+    var extractedNumbers = numbersExtractor.extract(numbers);
+    return extractedNumbers.filter(filter);
+  };
 }
 
 if(!Array.prototype.sum){
@@ -24,56 +48,12 @@ if(!Array.prototype.sum){
   };
 }
 
-function NumberExtractorWithNegativesValidator(numbersExtractor){
-
-  var throwIfContainsNegatives = function(numbers){
+function NegativesValidator(){
+  this.validateAndThrow = function(numbers){
     var negatives = numbers.negatives();
     if(negatives.length){
       throw "Negatives not allowed: " + negatives.join(", ");
     }
-  };
-
-  this.extract = function(numbers){
-    var extractedNumbers = numbersExtractor.extract(numbers);
-    throwIfContainsNegatives(extractedNumbers);
-    return extractedNumbers;
-  };
-}
-
-function NumberExtractorWithBiggerThanFilter(numbersExtractor){
-
-  var biggerThan = function(limit){
-    return function(number){
-      return number <= limit;
-    }
-  };
-
-  this.extract = function(numbers){
-    var extractedNumbers = numbersExtractor.extract(numbers);
-    return extractedNumbers.filter(biggerThan(1000));
-  };
-}
-
-function StringCalculator(numbersExtractor){
-
-  this.add = function(numbers){
-    var extractedNumbers = numbersExtractor.extract(numbers);
-    return extractedNumbers.sum();
   }
 }
 
-function StringCalculatorBuilder(numberExtractor){
-  var numberExtractor = numberExtractor || new NumberExtractor();
-
-  this.withBiggerThanFilter = function(){
-    return new StringCalculatorBuilder(new NumberExtractorWithBiggerThanFilter(numberExtractor));
-  };
-
-  this.withNegativesValidator = function(){
-    return new StringCalculatorBuilder(new NumberExtractorWithNegativesValidator(numberExtractor));
-  };
-
-  this.build = function(){
-    return new StringCalculator(numberExtractor);
-  }
-}

@@ -1,15 +1,10 @@
 describe('A String Calculator', function(){
-  
+
   var calculator;
 
   beforeEach(function(){
-    var aStringCalculator = function(){
-      return new StringCalculatorBuilder();
-    };
-    calculator = aStringCalculator()
-      .withBiggerThanFilter()
-      .withNegativesValidator()
-      .build();
+    var factory = new StringCalculatorFactory();
+    calculator = factory.create();
   });
 
   it("should return zero when adding an empty string", function(){
