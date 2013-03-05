@@ -25,12 +25,16 @@ if(!Array.prototype.sum){
 }
 
 function StringCalculator(numbersExtractor){
-  this.add = function(numbers){
-    var extractedNumbers = numbersExtractor.extract(numbers);
-    var negatives = extractedNumbers.negatives();
+  var validateNegatives = function(numbers){
+    var negatives = numbers.negatives();
     if(negatives.length){
       throw "Negatives not allowed: " + negatives.join(", ");
-    }
+    };
+  }
+
+  this.add = function(numbers){
+    var extractedNumbers = numbersExtractor.extract(numbers);
+    validateNegatives(extractedNumbers);
     return extractedNumbers.sum();
   }
 }
