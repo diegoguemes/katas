@@ -44,4 +44,8 @@ describe('A String Calculator', function(){
     var result = calculator.add("//5,10,20,30,1000,1001,1002");
     expect(result).toBe(1065);
   });
+
+  it("should allow to define custom delimiter of any length", function(){
+    var result = calculator.add("//[***]\n5***10***20***30");
+  });
 });
