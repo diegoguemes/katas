@@ -28,24 +28,24 @@ describe('A String Calculator', function(){
   });
 
   it("should allow sum the numbers separated by custom separator", function(){
-    var result = calculator.add("//*\n5*10*20*30");
+    var result = calculator.add("//;\n5;10;20;30");
     expect(result).toBe(65);
   });
 
   it("should throw error when adding negatives", function(){
     var addWithNegatives = function(){
-      calculator.add("//5,-10,-20,30");
+      calculator.add("5,-10,-20,30");
     };
     expect(addWithNegatives).toThrow("Negatives not allowed: -10, -20");
   });
 
   it("should ignore numbers bigger than 1000", function(){
-    var result = calculator.add("//5,10,20,30,1000,1001,1002");
+    var result = calculator.add("5,10,20,30,1000,1001,1002");
     expect(result).toBe(1065);
   });
 
   it("should allow to define custom delimiter of any length", function(){
-    var result = calculator.add("//[***]\n5***10***20***30");
+    var result = calculator.add("//***\n5***10***20***30");
     expect(result).toBe(65);
   });
 
